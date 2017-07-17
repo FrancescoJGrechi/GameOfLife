@@ -1,4 +1,4 @@
-public class cell {
+public class cell{
 	
 	///// WE DEFINE OUR CONSTANT PARAMETERS /////
 	public static final int NUMNEIGHBORS = 4;

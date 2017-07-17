@@ -2,13 +2,18 @@ import java.io.*;
 
 public class grid {
 	
-	///// WE DEFINE OUR CONSTANTS
+	///// WE DEFINE OUR CONSTANTS /////
 	public static final int NUMNEIGHBORS = 4;
 	public static final int WIDTH  = 3;
 	public static final int HEIGHT = 3;
+	
+	
+	///// WE DEFINE OUR NON-CONSTANT PARAMETERS /////
 	public cell[] gridCurrent;
 
-	public grid (boolean[] stati) throws IOException, NullPointerException {
+	
+	// constructor method
+	public grid (boolean[] seed) throws IOException, NullPointerException {
 		// we initialize the cell array 
 		gridCurrent = new cell[WIDTH*HEIGHT];
 		
@@ -16,34 +21,40 @@ public class grid {
 		{
 			// we initialize each cell in the array to false
 			boolean alive = false;
-			gridCurrent[i] = new cell(alive);
+			gridCurrent[i] = new cell(alive, i);
 			
-			// if the input dictates alive, we flip the cell's "status"
-			if (stati[i])
+			// we initialize the grid to match the seed
+			if (seed[i])
 			{
 				gridCurrent[i].flipStatus();
 			}
 			
-			// we intialize each cell's neighbors
-			gridCurrent[i].findNeighbors(i);
+			// we initialize each cell's neighbors
+			gridCurrent[i].findNeighbors();
 		}
 		
-	}// we initialize our grid of cells
+	}// end of constructor method
 	
+	
+	// method which updates the grid according to Conway's rules
 	public void updateGrid(){
-		// we create a copy of the current system
-		cell[] gridCopy = new cell[gridCurrent.length];
-		System.arraycopy(gridCurrent, 0, gridCopy, 0, WIDTH*HEIGHT);
 		
+		// we create a copy of the current grid
+		cell[] gridCopy = new cell[gridCurrent.length];
+		deepCopy(gridCurrent, gridCopy);
+				
 		// we cycle through our array, and update each element
 		for (int i = 0; i < gridCopy.length; ++i){
 			updateCell(gridCurrent, gridCopy, i);
 		}
 		
 		// we store this updated array as our current array
-		System.arraycopy(gridCopy, 0, gridCurrent, 0, WIDTH*HEIGHT);
-	}
+		System.arraycopy(gridCopy, 0, gridCurrent, 0, HEIGHT*WIDTH);
+		
+	}// end of updateGrid() method
 	
+	
+	// method which prints out the current grid, using A for alive and D for dead
 	public void printGrid(){
 		System.out.println("-------------");
 		for (int i = 0; i < HEIGHT; ++i){
@@ -57,41 +68,49 @@ public class grid {
 			}
 		}
 		System.out.println("\n-------------");
-	}// end of printGrid method
+	}// end of printGrid() method
 	
+	
+	// method which prints out statistics about the current board
 	public void printStats(){
 		// we define the parameters to print out
-		int lifeValue = 0;
+		float lifeValue = 0;
 		
 		// we sum all values (counting alive as 1 and dead as 0), and average them
 		for (int i = 0; i < WIDTH*HEIGHT; ++i){
 			if (gridCurrent[i].returnCellStatus()){
-				++lifeValue;
+				lifeValue += 1.0f;
 			}
 		}
-		lifeValue = lifeValue / WIDTH*HEIGHT;
+		lifeValue = (1.0f * lifeValue) / (WIDTH*HEIGHT);
 		
 		// we print out the parameters
-		System.out.println("LifeValue = " + lifeValue);
-	}
+		System.out.printf("LifeValue = %.2f \n", lifeValue);
+	}// end of printStats() method
 	
+	
+	// static method which updates a particular cell
 	private static void updateCell(cell[] gridCurrent, cell[] gridCopy, int i){
+		int numAliveNeighbors = aliveNeighbors(gridCurrent, i);
+		
 		// if the cell is alive, we enter this branch
 		if (gridCurrent[i].returnCellStatus()){
-			if (aliveNeighbors(gridCurrent, i) < 2 || aliveNeighbors(gridCurrent, i) > 3){
+			if (numAliveNeighbors < 2 || numAliveNeighbors > 3){
 				gridCopy[i].flipStatus();
 			}
 		}// end of cell status checking statement
 		
 		// if the cell is not alive, we enter this branch
 		else{
-			if (aliveNeighbors(gridCurrent, i) == 3){
+			if (numAliveNeighbors == 3){
 				gridCopy[i].flipStatus();
 			}
 		}// end of else statement
 		
-	}// end of updateCell method
+	}// end of updateCell() method
 	
+	
+	// static method which returns the number of alive neighbors a given cell has
 	private static int aliveNeighbors(cell[] currentGrid, int i){
 		// we define the number alive neighbors
 		int numAliveNeighbors = 0;
@@ -102,9 +121,17 @@ public class grid {
 				++numAliveNeighbors;
 			}
 		}
-		
 		// we send back the number of alive neighbors
 		return numAliveNeighbors;
-	}
+	}// end of aliveNeighbors method
+	
+	// static method which makes a deep copy of a grid
+	private static void deepCopy(cell[] currentGrid, cell[] gridCopy){
+		for (int i = 0; i < WIDTH*HEIGHT; ++i){
+			gridCopy[i] = new cell(currentGrid[i].returnCellStatus(), i);
+			gridCopy[i].findNeighbors();
+		}// end of for loop
+	}// end of deepCopy() method
+	
 
 }// end of grid object
