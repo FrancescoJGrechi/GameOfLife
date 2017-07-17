@@ -1,5 +1,4 @@
 import java.io.*;
-// import java.util.Arrays; --> used for neighbor testing
 
 // main method in which we make use of the cell grid
 public class mainer {
@@ -14,7 +13,7 @@ public class mainer {
 	public static void main(String[] args){
 		
 		// we define our non-constant parameters
-		int generations = 5;
+		int generations = 1000;
 		
 		// we define the seed of our game
 		boolean[] seed = {
@@ -24,6 +23,9 @@ public class mainer {
 						};
 		
 		try{
+			// we define the start time 
+			final long startTime = System.currentTimeMillis();
+			
 			// we define our grid 
 			grid map = new grid(seed);
 			
@@ -33,13 +35,7 @@ public class mainer {
 			map.printStats();
 			System.out.println("*************");
 			System.out.println("*************");
-			
-			/* THIS IS USED TO TEST TO SEE WHAT THE NEIGHBORS ARE
-			for (int i = 0; i < WIDTH*HEIGHT; ++i){
-				System.out.println(Arrays.toString(map.gridCurrent[i].neighborIndices));
-			}
-			*/
-		
+					
 			// we loop through our grid, each time updating 
 			for (int i = 0; i < generations; ++i){
 				System.out.println("Generation #" + (i+1) + ":");
@@ -50,7 +46,11 @@ public class mainer {
 				System.out.println("*************");
 			} // end of for loop
 			
+			// we calculate the final time
+			final long finalTime = System.currentTimeMillis();
+			System.out.print("\nGenerated in " + (finalTime - startTime) + " ms\n");
 		}// end of try statement
+		
 		catch(IOException e){
 			System.out.println("IOException when creating the grid!");
 			e.printStackTrace();
