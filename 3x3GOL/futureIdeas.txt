@@ -1,4 +1,0 @@
-Things to update eventually:
-
-1) Try moving the cell coordinate into the  cell class, so each cell object is "aware" of its position on the 
-grid
