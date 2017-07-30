@@ -12,7 +12,7 @@ public class mainer {
 	public static void main(String[] args){
 		
 		// we define our non-constant parameters
-		final int generations = 30;
+		final int GENERATIONS = 30;
 		Random randomizer = new Random();
 		
 		// we define the seed of our game
@@ -32,7 +32,7 @@ public class mainer {
 			mapPrint(map);
 					
 			// we loop through our grid, each time updating 
-			for (int i = 0; i < generations; ++i){
+			for (int i = 0; i < GENERATIONS; ++i){
 				System.out.println("Generation #" + (i+1) + ":");
 				map.updateGrid();
 				mapPrint(map);

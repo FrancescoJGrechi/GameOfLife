@@ -44,9 +44,7 @@ public class grid {
 		}
 		
 		// we store this updated array as our current array
-		for (int i = 0; i < grid.height; ++i){
-			gridCurrent[i] = gridCopy[i].clone();
-		}
+		System.arraycopy(gridCopy, 0, gridCurrent, 0, gridCurrent.length);
 		
 	}// end of updateGrid() method
 	
@@ -68,7 +66,7 @@ public class grid {
 	
 	// static method which updates a particular cell
 	private static void updateCell(cell[][] gridCurrent, cell[][] gridCopy, int i, int j){
-		int numAliveNeighbors = aliveNeighbors(gridCurrent, i, j, grid.height);
+		int numAliveNeighbors = aliveNeighbors(gridCurrent, i, j);
 		
 		// if the cell is alive, we enter this branch
 		if (gridCurrent[i][j].returnCellStatus()){
@@ -87,7 +85,7 @@ public class grid {
 	}// end of updateCell() method
 	
 	// static method which returns the number of alive neighbors a given cell has
-	private static int aliveNeighbors(cell[][] currentGrid, int i, int j, int height){
+	private static int aliveNeighbors(cell[][] currentGrid, int i, int j){
 		// we define the number alive neighbors
 		int numAliveNeighbors = 0;
 		

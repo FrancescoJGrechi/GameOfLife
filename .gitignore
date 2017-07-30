@@ -1,8 +1,10 @@
 .metadata
-3x3GOL/.classpath
-3x3GOL/.project
-3x3GOL/.settings/org.eclipse.jdt.core.prefs
-3x3GOL/futureIdeas.txt
-3x3GOL/bin/cell.class
-3x3GOL/bin/grid.class
-3x3GOL/bin/mainer.class
+NxNGOL/.classpath
+NxNGOL/.project
+NxNOL/.settings/org.eclipse.jdt.core.prefs
+NxNGOL/futureIdeas.txt
+NxNGOL/bin/cell.class
+NxNGOL/bin/grid.class
+NxNGOL/bin/mainer.class
+NxNGOL/src/__pycache__/cell.cpython-36.pyc
+NxNGOL/src/__pycache__/grid.cpython-36.pyc
