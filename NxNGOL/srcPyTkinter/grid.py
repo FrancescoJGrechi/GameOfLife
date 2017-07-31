@@ -15,12 +15,14 @@ class grid:
         self.width = width
 
         #we define the grid to be a 2D numpy array of object
-        self.gridCurrent = [[cell.cell(seed[i][j]) for i in range(self.width)] for j in range(self.height)]
+        self.gridCurrent = []
 
         #we initialize the array based upon the seed
         for i in range(self.height):
+            self.gridCurrent.append([])
             for j in range(self.width):
-                self.gridCurrent[i][j] = cell.cell(seed[i][j])
+                newCell = cell.cell(seed[i][j])
+                self.gridCurrent[i].append(newCell)
 
 
     #method which returns the number of alive neighbors a given cell has
@@ -40,7 +42,7 @@ class grid:
         return numAliveNeighbors
     
 
-        #method which updates the Grid based upon Conway's rules
+    #method which updates the Grid based upon Conway's rules
     def updateGrid(self):
         #we create a copy of the current grid
         gridCopy = copy.deepcopy(self.gridCurrent)
@@ -69,18 +71,6 @@ class grid:
             if numAliveNeighbors == 3:
                 gridCopy[i][j].flipStatus()
                 
-
-    #method which prints out the current grid, using A for alive and D for dead
-    def printGrid(self):
-        print("-------------")
-        for i in range(self.height):
-            print("| ", end='')
-            for j in range (self.width):
-                self.gridCurrent[i][j].printCellStatus()
-                print(" | ", end='')
-            if i < (self.width - 1):
-                print("\n")
-        print("\n")
 
 
             

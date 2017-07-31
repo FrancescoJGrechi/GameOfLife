@@ -4,13 +4,6 @@ class cell:
     def __init__(self, alive=False):
         self.alive = alive
 
-    #method which prints a given cell's __alive parameter
-    def printCellStatus(self):
-        if self.alive:
-            print("A", end='')
-        else:
-            print("D", end='')
-
     #method which flips a cell's alive parameter (i.e. A->D, D->A)
     def flipStatus(self):
         self.alive = not (self.alive)
